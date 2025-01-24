@@ -1,0 +1,204 @@
+#include <SPI.h>
+#include <MFRC522.h>
+
+#define SS_PIN 10
+#define RST_PIN 9
+int state1 = 2;
+int state2 = 3;
+int state3 = 4;
+int busser=7;
+MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance.
+
+void setup() {
+  pinMode(state1, OUTPUT);
+  pinMode(state2, OUTPUT);
+  pinMode(state3,OUTPUT);
+ pinMode(busser, OUTPUT);
+  
+  SPI.begin();          
+    mfrc522.PCD_Init(); 
+}
+
+void loop()
+ {
+
+
+ for(byte i=0;i<5;i++)
+ { 
+  bool authorizedAccess = false;
+
+  // Look for new cards
+  if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
+    
+    String content = "";
+    for (byte i = 0; i < mfrc522.uid.size; i++) {
+     
+      content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
+      content.concat(String(mfrc522.uid.uidByte[i], HEX));
+    }
+    
+    content.toUpperCase();
+
+    
+    if (content.substring(1) == "67 50 30 03") { // Replace with your RFID UID
+    
+      authorizedAccess = true;
+    }
+    mfrc522.PICC_HaltA();
+  }
+  if (authorizedAccess) {
+
+    // Stop normal sequence and turn red for 10 seconds
+    digitalWrite(state1, LOW);
+    digitalWrite(state2, LOW);
+    digitalWrite(state3, HIGH);
+    digitalWrite(busser, HIGH);
+    delay(10000);
+    digitalWrite(state3, LOW);
+    digitalWrite(busser, LOW);
+  } 
+  else {
+        digitalWrite(state1, LOW);
+    digitalWrite(state2, LOW);
+
+    
+    digitalWrite(state3, HIGH);
+    delay(1000);
+
+  }
+ }
+ for(byte i=0;i<1;i++)
+ { 
+  bool authorizedAccess = false;
+
+  // Look for new cards
+  if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
+    
+    String content = "";
+    for (byte i = 0; i < mfrc522.uid.size; i++) {
+     
+      content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
+      content.concat(String(mfrc522.uid.uidByte[i], HEX));
+    }
+    
+    content.toUpperCase();
+
+    
+    if (content.substring(1) == "67 50 30 03") { // Replace with your RFID UID
+    
+      authorizedAccess = true;
+    }
+    mfrc522.PICC_HaltA();
+  }
+  if (authorizedAccess) {
+
+    // Stop normal sequence and turn red for 10 seconds
+    digitalWrite(state1, LOW);
+    digitalWrite(state2, LOW);
+    digitalWrite(state3, HIGH);
+    digitalWrite(busser, HIGH);
+    delay(10000);
+    digitalWrite(state3, LOW);
+    digitalWrite(busser, LOW);
+  } 
+  else {
+        digitalWrite(state1, LOW);
+    digitalWrite(state3, LOW);
+
+    
+    digitalWrite(state2, HIGH);
+    delay(1000);
+
+  }
+ }
+ for(byte i=0;i<5;i++)
+ { 
+  bool authorizedAccess = false;
+
+  // Look for new cards
+  if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
+    
+    String content = "";
+    for (byte i = 0; i < mfrc522.uid.size; i++) {
+     
+      content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
+      content.concat(String(mfrc522.uid.uidByte[i], HEX));
+    }
+    
+    content.toUpperCase();
+
+    
+    if (content.substring(1) == "67 50 30 03") { // Replace with your RFID UID
+    
+      authorizedAccess = true;
+    }
+    mfrc522.PICC_HaltA();
+  }
+  if (authorizedAccess) {
+
+    // Stop normal sequence and turn red for 10 seconds
+    digitalWrite(state1, LOW);
+    digitalWrite(state2, LOW);
+    digitalWrite(state3, HIGH);
+    digitalWrite(busser, HIGH);
+    delay(10000);
+    digitalWrite(state3, LOW);
+    digitalWrite(busser, LOW);
+  } 
+  else {
+        digitalWrite(state2, LOW);
+    digitalWrite(state3, LOW);
+
+    
+    digitalWrite(state1, HIGH);
+    delay(1000);
+
+  }
+ }
+ for(byte i=0;i<1;i++)
+ { 
+  bool authorizedAccess = false;
+
+  // Look for new cards
+  if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
+    
+    String content = "";
+    for (byte i = 0; i < mfrc522.uid.size; i++) {
+     
+      content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
+      content.concat(String(mfrc522.uid.uidByte[i], HEX));
+    }
+    
+    content.toUpperCase();
+
+    
+    if (content.substring(1) == "67 50 30 03") { // Replace with your RFID UID
+    
+      authorizedAccess = true;
+    }
+    mfrc522.PICC_HaltA();
+  }
+
+  if (authorizedAccess) {
+
+    // Stop normal sequence and turn red for 10 seconds
+    digitalWrite(state1, LOW);
+    digitalWrite(state2, LOW);
+    digitalWrite(state3, HIGH);
+    digitalWrite(busser, HIGH);
+    delay(10000);
+    digitalWrite(state3, LOW);
+    digitalWrite(busser, LOW);
+  } 
+  else {
+        digitalWrite(state3, LOW);
+    digitalWrite(state1, LOW);
+
+    
+    digitalWrite(state2, HIGH);
+    delay(1000);
+
+  }
+ }
+ 
+ }
